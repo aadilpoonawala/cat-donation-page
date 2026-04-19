@@ -616,7 +616,7 @@ function handleDonate(){
     name:'Help Billu: Surgery Fund',
     description:`₹${selectedAmount.toLocaleString('en-IN')} for Billu's medical expenses`,
     handler:function(response){
-      alert('You stopped here. You saw a cat you've never met, in a city that may not be yours, and you decided he mattered. Billu is healing because enough people like you believed a stray's life was worth the trouble. Thank you. 🧡 Payment ID: '+response.razorpay_payment_id);
+      alert('Thank you 🧡 Payment ID: '+response.razorpay_payment_id);
       totalRaised+=selectedAmount;
       donorCount+=1;
       updateProgress();
