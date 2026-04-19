@@ -576,20 +576,24 @@ setTimeout(()=>updateProgress(),500);
 
 let selectedAmount = 2500;
 
-document.querySelectorAll('.amount-btn').forEach(btn=>{
-  btn.addEventListener('click',function(){
-    document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
-    this.classList.add('active');
-    selectedAmount = parseInt(this.dataset.amount);
+document.querySelectorAll('.amount-btn').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+    e.preventDefault();
+    var allBtns = document.querySelectorAll('.amount-btn');
+    for(var i=0;i<allBtns.length;i++){allBtns[i].classList.remove('active');}
+    btn.classList.add('active');
+    selectedAmount = parseInt(btn.getAttribute('data-amount'));
     document.getElementById('customAmount').value='';
     updateDonateButton();
   });
 });
 
-document.getElementById('customAmount').addEventListener('input',function(){
-  if(this.value){
-    document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
-    selectedAmount = parseInt(this.value)||0;
+document.getElementById('customAmount').addEventListener('input',function(e){
+  var val = e.target.value;
+  if(val){
+    var allBtns = document.querySelectorAll('.amount-btn');
+    for(var i=0;i<allBtns.length;i++){allBtns[i].classList.remove('active');}
+    selectedAmount = parseInt(val)||0;
     updateDonateButton();
   }
 });
@@ -612,7 +616,7 @@ function handleDonate(){
     name:'Help Billu: Surgery Fund',
     description:`₹${selectedAmount.toLocaleString('en-IN')} for Billu's medical expenses`,
     handler:function(response){
-      alert('The world is full of things that ask for your attention and most of them you walk past. But you stopped here. You saw a cat you've never met, in a city that may not be yours, and you decided he mattered. Billu is healing because enough people like you believed a stray's life was worth the trouble. Thank you. 🧡 Payment ID: '+response.razorpay_payment_id);
+      alert('You stopped here. You saw a cat you've never met, in a city that may not be yours, and you decided he mattered. Billu is healing because enough people like you believed a stray's life was worth the trouble. Thank you. 🧡 Payment ID: '+response.razorpay_payment_id);
       totalRaised+=selectedAmount;
       donorCount+=1;
       updateProgress();
